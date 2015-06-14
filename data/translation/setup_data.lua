@@ -10,6 +10,9 @@ lang2 = 'eng' -- translate to
 n_pairs = 500000 -- sentence pairs wanted
 s_pairs = {} -- table of sentences
 
+if not (path.exists('links.csv') or path.exists('sentences.csv')) then
+   print('Download Sentences and Links files from: http://tatoeba.org/eng/downloads and unzip to *.csv files')
+end
 
 function readLinks(filepath)
    local file = io.open(filepath,'r')
