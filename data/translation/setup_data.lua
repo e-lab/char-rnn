@@ -122,8 +122,8 @@ pf,err = io.open("input.txt","w")
 -- line by line:
 for i, pair in ipairs(s_pairs) do
    if pair == nil then break end
-   pf:write(pair[1][2] .. '>' .. pair[2][2] .. '\n')
-end
+   pf:write(pair[1][2] .. '|' .. pair[2][2] .. '|\n') -- "|" is the "end of sentence" character
+ end
 pf:close()
 
 
