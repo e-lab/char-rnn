@@ -1,4 +1,3 @@
-
 local LSTM = {}
 function LSTM.lstm(input_size, rnn_size, n, dropout)
   dropout = dropout or 0 

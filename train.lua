@@ -18,12 +18,14 @@ require 'nn'
 require 'nngraph'
 require 'optim'
 require 'lfs'
-
+require 'sys'
 require 'util.OneHot'
 require 'util.misc'
+
 local CharSplitLMMinibatchLoader = require 'util.CharSplitLMMinibatchLoader'
 local model_utils = require 'util.model_utils'
 local LSTM = require 'model.LSTM'
+-- nngraph.setDebug(true)
 
 cmd = torch.CmdLine()
 cmd:text()
@@ -129,6 +131,14 @@ end
 -- ship the model to the GPU if desired
 if opt.gpuid >= 0 then
     for k,v in pairs(protos) do v:cuda() end
+end
+
+-- plot model
+opt.verbose = true
+if opt.verbose then
+    setprintlevel(2)
+    print({protos.rnn.fg})
+    graph.dot(protos.rnn.fg,'RNN forward graph', 'RNN') -- print and save svg file of RNN
 end
 
 -- put the above things into one flattened parameters tensor

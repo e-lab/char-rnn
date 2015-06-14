@@ -63,6 +63,7 @@ function CharSplitLMMinibatchLoader.create(data_dir, batch_size, seq_length, spl
 
     local ydata = data:clone()
     ydata:sub(1,-2):copy(data:sub(2,-1))
+    -- ydata is just data shifted by 1 character: data = [19, 48, 32, ...]; ydata = [48, 32 ...]
     ydata[-1] = data[1]
     self.x_batches = data:view(batch_size, -1):split(seq_length, 2)  -- #rows = #batches
     self.nbatches = #self.x_batches
