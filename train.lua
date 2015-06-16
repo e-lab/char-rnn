@@ -92,6 +92,9 @@ local vocab = loader.vocab_mapping
 print('vocab size: ' .. vocab_size)
 -- make sure output directory exists
 if not path.exists(opt.checkpoint_dir) then lfs.mkdir(opt.checkpoint_dir) end
+-- create inverted vocab like in sampling:
+local ivocab = {}
+for c,i in pairs(vocab) do ivocab[i] = c end
 
 -- define the model: prototypes for one timestep, then clone them in time
 local do_random_init = true
@@ -208,6 +211,17 @@ function feval(x)
         x = x:float():cuda()
         y = y:float():cuda()
     end
+    -- print(y:size())
+    -- print sentence out:
+    for cc = 1, y:size(1) do
+        for dd = 1, y:size(2) do
+            io.write(ivocab[y[cc][dd]])
+        end
+        io.write('\n\n')
+    end
+    io.write('\n\n')
+
+
     ------------------- forward pass -------------------
     local rnn_state = {[0] = init_state_global}
     local predictions = {}           -- softmax outputs

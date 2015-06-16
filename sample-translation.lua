@@ -89,7 +89,7 @@ print('Loading input sentences file: ' .. input_file)
 local s_file = io.open(input_file,'r')
 for i=1, opt.number do
   fline = s_file:read()
-  sentence = string.match(fline, "[^.]+%p>") -- stop at: '%punctuation' and '>'
+  sentence = string.match(fline, "[^.]+%p<") -- stop at: '%punctuation' and '<'
   table.insert(seed_text, sentence)
 end
 s_file:close()
@@ -98,7 +98,7 @@ s_file:close()
 -- for every sentence in test set:
 for j=1, opt.number do
     -- do a few seeded timesteps
-    pf(Cb .. '\n\nseeding with:\n"' .. seed_text[j] ..'"' .. Cn)
+    pf(Cr .. '\n\nseeding with:\n"' ..Cb .. seed_text[j] ..'"' .. Cn)
     for c in seed_text[j]:gmatch'.' do
         prev_char = torch.Tensor{vocab[c]}
         if opt.gpuid >= 0 then prev_char = prev_char:cuda() end
